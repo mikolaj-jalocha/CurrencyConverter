@@ -27,8 +27,8 @@ class CurrencyViewModelTest {
         assertEquals(beforeTo.currency, afterFrom.currency)
         assertEquals(beforeFrom.currency, afterTo.currency)
 
-        assertEquals(beforeTo.value, afterFrom.value, 0.0001f)
-        assertEquals(beforeFrom.value, afterTo.value, 0.0001f)
+        assertEquals(beforeTo.value, afterTo.value, 0.0001f)
+        assertEquals(beforeFrom.value, afterFrom.value, 0.0001f)
     }
 
 

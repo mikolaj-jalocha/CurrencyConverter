@@ -22,6 +22,8 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -49,8 +51,8 @@ fun CurrenciesListBottomSheetContent(
 ) {
     val queryState = rememberSaveable { mutableStateOf("") }
 
-    val filteredCurrencies = remember(queryState.value) {
-        filterAndSortCurrencies(queryState.value)
+    val filteredCurrencies by remember {
+        derivedStateOf { filterAndSortCurrencies(queryState.value) }
     }
 
     Column(

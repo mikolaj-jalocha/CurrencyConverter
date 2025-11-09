@@ -7,10 +7,12 @@ import com.mj.currencyconverter.data.repository.CurrencyRepository
 import com.mj.currencyconverter.data.utils.onError
 import com.mj.currencyconverter.data.utils.onSuccess
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlin.math.absoluteValue
 
 class CurrencyViewModel(
     private val currencyRepository: CurrencyRepository
@@ -18,53 +20,61 @@ class CurrencyViewModel(
 
     private val _state = MutableStateFlow(CurrencyConverterScreenState())
     val state: StateFlow<CurrencyConverterScreenState> = _state
-
+    private var conversionJob: Job? = null
 
     init {
         convert()
     }
 
     fun convert() {
-        if (!(state.value.sendingFromTextFieldState.isError)) {
-            _state.update {
-                it.copy(
-                    isLoading = true
-                )
-            }
-            viewModelScope.launch(Dispatchers.IO) {
-                currencyRepository.convertCurrencies(
-                    from = state.value.sendingFromTextFieldState.currency,
-                    to = state.value.sendingToTextFieldState.currency,
-                    amount = state.value.sendingFromTextFieldState.value
-                ).onSuccess { convertedCurrency ->
-                    _state.update {
-                        it.copy(
-                            sendingToTextFieldState = it.sendingToTextFieldState.copy(
-                                value = convertedCurrency.toAmount
-                            ),
-                            rate = convertedCurrency.rate,
-                            isLoading = false,
-                            errorMessage = null
-                        )
-                    }
-                }.onError { result ->
-                    _state.update {
-                        it.copy(
-                            errorMessage = result.name,
-                            isLoading = false
-                        )
-                    }
+        if ((state.value.sendingFromTextFieldState.isError)) return
+
+        _state.update {
+            it.copy(
+                isLoading = true
+            )
+        }
+        conversionJob?.cancel()
+        conversionJob = viewModelScope.launch(Dispatchers.IO) {
+            currencyRepository.convertCurrencies(
+                from = state.value.sendingFromTextFieldState.currency,
+                to = state.value.sendingToTextFieldState.currency,
+                amount = state.value.sendingFromTextFieldState.value
+            ).onSuccess { convertedCurrency ->
+                _state.update {
+                    it.copy(
+                        sendingToTextFieldState = it.sendingToTextFieldState.copy(
+                            value = convertedCurrency.toAmount
+                        ),
+                        rate = convertedCurrency.rate,
+                        isLoading = false,
+                        errorMessage = null
+                    )
+                }
+            }.onError { result ->
+                _state.update {
+                    it.copy(
+                        errorMessage = result.name,
+                        isLoading = false
+                    )
                 }
             }
         }
     }
 
+
     fun swapInputFieldState() {
         _state.update { current ->
             val temp = current.sendingFromTextFieldState
             current.copy(
-                sendingFromTextFieldState = current.sendingToTextFieldState.copy(shouldValidate = true),
-                sendingToTextFieldState = temp
+                sendingFromTextFieldState = current.sendingToTextFieldState.copy(
+                    shouldValidate = true,
+                    value = temp.value
+                ),
+                sendingToTextFieldState = temp.copy(
+                    value = current.sendingToTextFieldState.value,
+                    shouldValidate = false
+                )
             )
         }
         convert()
@@ -75,7 +85,7 @@ class CurrencyViewModel(
             _state.update { current ->
                 current.copy(
                     sendingFromTextFieldState = current.sendingFromTextFieldState.copy(
-                        value = value
+                        value = value.absoluteValue
                     )
                 )
             }

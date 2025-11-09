@@ -99,7 +99,8 @@ private fun CurrencyConverterScreen(
     val scope = rememberCoroutineScope()
     var showBottomSheet by remember { mutableStateOf(false) }
     var bottomSheetTitle by remember { mutableIntStateOf(R.string.sending_from) }
-    var onCurrencyClick: (Currency) -> Unit = {}
+    var onCurrencyClick by remember { mutableStateOf<(Currency) -> Unit>({}) }
+
 
     Scaffold(
         modifier = modifier,
@@ -113,7 +114,7 @@ private fun CurrencyConverterScreen(
                     detectTapGestures(onTap = {
                         focusManager.clearFocus()
                         keyboardController?.hide()
-                        onConvert
+                        onConvert()
                     })
                 },
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -133,7 +134,8 @@ private fun CurrencyConverterScreen(
                             onCurrencyClick(it)
                             scope.launch {
                                 sheetState.hide()
-                                showBottomSheet = false
+                                if (!sheetState.isVisible) showBottomSheet = false
+
                             }
                         },
                     )

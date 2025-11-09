@@ -1,4 +1,4 @@
-package com.mj.currencyconverter.ui
+package com.mj.currencyconverter.ui.converter_screen
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility

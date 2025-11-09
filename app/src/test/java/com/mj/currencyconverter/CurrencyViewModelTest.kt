@@ -2,7 +2,7 @@ package com.mj.currencyconverter
 
 import com.mj.currencyconverter.data.model.Currency
 import com.mj.currencyconverter.data.repository.CurrencyRepository
-import com.mj.currencyconverter.ui.CurrencyViewModel
+import com.mj.currencyconverter.ui.converter_screen.CurrencyViewModel
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue

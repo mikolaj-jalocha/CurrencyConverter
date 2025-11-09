@@ -1,4 +1,4 @@
-package com.mj.currencyconverter.ui
+package com.mj.currencyconverter.ui.converter_screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -146,7 +146,6 @@ fun CurrencyTile(
         }
     }
 }
-
 
 fun filterAndSortCurrencies(query: String): List<Currency> {
     val q = query.trim().lowercase()

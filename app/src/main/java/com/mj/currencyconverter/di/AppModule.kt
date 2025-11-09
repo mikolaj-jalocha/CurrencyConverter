@@ -4,7 +4,7 @@ import com.mj.currencyconverter.data.network.CurrencyConversionApi
 import com.mj.currencyconverter.data.network.KtorCurrencyConversionApi
 import com.mj.currencyconverter.data.repository.CurrencyRepository
 import com.mj.currencyconverter.data.repository.CurrencyRepositoryImpl
-import com.mj.currencyconverter.ui.CurrencyViewModel
+import com.mj.currencyconverter.ui.converter_screen.CurrencyViewModel
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation

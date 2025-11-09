@@ -1,7 +1,7 @@
 package com.mj.currencyconverter
 
 import com.mj.currencyconverter.data.model.Currency
-import com.mj.currencyconverter.ui.filterAndSortCurrencies
+import com.mj.currencyconverter.ui.converter_screen.filterAndSortCurrencies
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test

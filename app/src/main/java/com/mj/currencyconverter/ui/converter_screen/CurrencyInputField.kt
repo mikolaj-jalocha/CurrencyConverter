@@ -1,4 +1,4 @@
-package com.mj.currencyconverter.ui
+package com.mj.currencyconverter.ui.converter_screen
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
@@ -104,7 +104,7 @@ fun CurrencyInputField(
                 ) {
                     Image(
                         painter = painterResource(flagResId),
-                        contentDescription = "Currency flag",
+                        contentDescription = null,
                     )
                     Text(
                         text = currencyCode,

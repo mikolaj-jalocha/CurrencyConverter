@@ -1,4 +1,4 @@
-package com.mj.currencyconverter.ui
+package com.mj.currencyconverter.ui.converter_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

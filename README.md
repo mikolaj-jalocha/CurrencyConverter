@@ -13,7 +13,7 @@ This is an Android mobile application developed as a technical task, featuring a
 
 ## 🛠️ Technology Stack
 
-* App was written in Kotlin using MVVM architecture, UI was created with Jetpack Compose ❤️, ap
+* App was written in Kotlin using MVVM architecture, UI was created with Jetpack Compose ❤️
 * Ktor for communication with API
 * Koin as a Dependency Injection Library
 * JUnit, Mockito for testing
